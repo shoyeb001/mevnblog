@@ -3,13 +3,13 @@
         <div class="author-container">
             <div class="img-container">
                 <div class="img">
-                    <img :src="`http://localhost:8000/${author.image}`">
+                    <img :src="`http://localhost:8000/${image}`">
                 </div>
             </div>
             
             <div class="desc">
-                <h4>{{author.name}}</h4>
-                <p>{{author.about}}</p>
+                <h4>{{name}}</h4>
+                <p>{{about}}</p>
             </div>
         </div>
     </div>
@@ -19,7 +19,10 @@
     export default {
         name:"AuthorContainer",
         props:{
-            author:Object,
+            id:String,
+            name:String,
+            about:String,
+            image:String,
         }
     }
 </script>

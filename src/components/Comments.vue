@@ -2,11 +2,11 @@
     <div class="comments">
         <div class="user">
             <div class="img">
-                <img src="../assets/img/user.png">
+                <img :src="`http://localhost:8000/${user.image}`">
             </div>
             <div class="info my-auto">
-                <p class="mb-0">{{email}}</p>
-                <span>{{date}}</span>
+                <p class="mb-0">{{user.name}}</p>
+                <span>{{ new Date(date).getHours() + ":" + new Date(date).getMinutes() + ", " + new Date(date).toDateString()}}</span>
             </div>
         </div>
         <div class="comment-container">
@@ -16,12 +16,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+
     export default {
         name:"Comments",
+        data(){
+            return{
+                user:[],
+            }
+        },
         props:{
-            email:String,
+            user_id:String,
+            msg:String,
             date:String,
-            msg:String
+        },
+        async mounted(){
+            const users = await axios.get("http://localhost:8000/user/view/"+this.user_id);
+            this.user = users.data;
         }
     }
 </script>

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="editor">
         <quill-editor theme="snow" toolbar="full">
             
@@ -22,4 +22,4 @@ export default {
     height: 400px;
     display: inline-block;
 }
-</style>
+</style> -->

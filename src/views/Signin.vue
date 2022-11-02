@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+import axios from 'axios';
 export default {
     name: "Signin",
     data() {
@@ -42,7 +42,8 @@ export default {
             const password = this.password;
             try {
                 const user = await axios.post("http://localhost:8000/user/login", {email:email,password:password});
-                localStorage.setItem("user",JSON.stringify(user.data));
+                localStorage.setItem("user",JSON.stringify(user.data.access_token));
+                localStorage.setItem("user_id",user.data.id);
                 this.store.state.islogged = true;
                 this.$router.push("/");
             } catch (error) {

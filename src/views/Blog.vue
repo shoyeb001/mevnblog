@@ -5,8 +5,8 @@
             <TagsContainer />
             <div class="blogs">
                 <div class="row">
-                    <div class="col-md-4" v-for="n in 10">
-                        <BlogArticleContainer />
+                    <div class="col-md-4" v-for="items in blog">
+                        <BlogArticleContainer :heading="items.title" :description="items.description" :thumbnail="items.thumbnail" :tags="items.tags[0]" :id="items._id" :user_id="items.user_id" :date="items.created_at"/>
                     </div>
                 </div>
             </div>
@@ -19,6 +19,7 @@
 import TagsContainer from '../components/TagsContainer.vue';
 import BlogArticleContainer from '../components/BlogArticleContainer.vue';
 import Footer from '../components/Footer.vue';
+import axios from 'axios';
 export default {
     name: "BlogPage",
     components: {
@@ -26,6 +27,21 @@ export default {
         BlogArticleContainer,
         Footer,
     },
+    data(){
+        return{
+            blog:[],
+            author:[],
+        }
+    },
+    async mounted(){
+        try {
+            const blogs = await axios.get("http://localhost:8000/post/view");
+            this.blog = blogs.data;
+           
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 }
 </script>

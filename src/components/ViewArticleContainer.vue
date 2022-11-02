@@ -5,10 +5,10 @@
             <div class="article-info">
                 <div class="author">
                     <div class="img">
-                        <img :src="`http://localhost:8000/${author.image}`" />
+                        <img :src="`http://localhost:8000/${user_image}`" />
                     </div>
                     <div class="author-des">
-                        <p><a href="#">{{author.name}}</a></p>
+                        <p><a href="#">{{user_name}}</a></p>
                         <span>{{date}}</span>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
         </div>
         <ArticleArea :thumbnail="thumbnail" :content="content"/>
         <hr class="line">
-        <AuthorContainer :author="author"/>
+        <AuthorContainer :name="user_name" :image="user_image" :about="user_about" :id="user_id"/>
         <hr class="line">
     </div>
 </template>
@@ -31,12 +31,17 @@
 <script>
 import ArticleArea from './ArticleArea.vue';
 import AuthorContainer from './AuthorContainer.vue';
-import axios from 'axios';
 export default {
     name: "ViewArticleContainer",
     components: {
         ArticleArea,
         AuthorContainer,
+    },
+    methods:{
+        // async getAuthor(user_id){
+        //     const xyz = await axios.get("http://localhost:8000/user/view/"+this.user_id);
+        //     this.author = xyz.data;
+        // }
     },
     props: {
         heading: String,
@@ -45,6 +50,9 @@ export default {
         tags: Array,
         user_id:String,
         date: Date,
+        user_name:String,
+        user_image:String,
+        user_about:String
     },
 
     data(){
@@ -53,10 +61,9 @@ export default {
         }
     },
 
-    async mounted(){
-        const xyz = await axios.get("http://localhost:8000/user/view/"+this.user_id);
-        this.author = xyz.data;
-    },
+    // async mounted(){
+    //    this.getAuthor();
+    // },
 }
 </script>
 

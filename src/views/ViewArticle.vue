@@ -3,10 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <ViewArticleContainer :heading="post?.title" :thumbnail="post.thumbnail" :content="post.content" :tags="post.tags" :date = "post.created_at" :user_id="post.user_id"/>
-                    <PostComment />
+                    <ViewArticleContainer :heading="post?.title" :thumbnail="post.thumbnail" :content="post.content" :tags="post.tags" :date = "post.created_at" :user_id="post.user_id" :user_name="author.name" :user_image="author.image" :user_about="author.about"/>
+                    <PostComment  :id="article_id" :CommentUpdate="CommentTrigger"/>
                     <div v-for="item in comments">
-                        <Comments :email="item.email" :date="item.date" :msg="item.comment" />
+                        <Comments :user_id="item.user_id" :msg="item.comment" :date="item.createdAt" :id="user_id" />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -42,59 +42,41 @@ export default {
     },
     data() {
         return {
-            comments: [
-                {
-                    email: "shoyebjio3398@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-                {
-                    email: "sakilak388@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-                {
-                    email: "shoyebjio3398@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-                {
-                    email: "sakilak388@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-                {
-                    email: "shoyebjio3398@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-                {
-                    email: "sakilak388@gmail.com",
-                    date: "32sept, 2021",
-                    comment:
-                        "This is the best article on the plannet. Hi. Please be wise, do not make the same mistake i had made in the past, i was a victim of bitcoin scam, i saw a glamorous review showering praises and marketing an investment firm, I reached out to them on what their contracts are, and I invested $17,000, which i was promised to get my first 15% profit in weeks, when it’s time to get my profits, I got to know the company was bogus, they kept asking me to invest more and i ran out of patience then requested to have my money back, they refused to answer nor refund my funds, not until a friend of mine introduced me to the WIZARD JAMES RECOVERY SERVICES, so I reached out and after tabling my complaints, they were swift to action and within 36 hours I got back my funds with the due profit. I couldn’t contain the joy in me. I urge you guys to reach out to WIZARD JAMES RECOVERY SERVICE on their support email: wizardjames8@yahoo.com and WhatsApp number: +1 (863) 254-2842. They provide excellent services.",
-                },
-            ],
+            comments: [],
             tags: [
                 'c++', 'JAVA', 'Web Developemt'
             ],
             post:[],
+            author:[],
+            article_id:"",
+            commentwatcher: 0,
         };
     },
-    async mounted(){
+    methods:{
+        CommentTrigger(){
+            this.commentwatcher++;
+        }
+    },
+    async created(){
+        this.article_id = this.$route.params.id;
             try {
                 const url= "http://localhost:8000/post/view/"+this.$route.params.id;
                 const article = await axios.get(url);
                 this.post = article.data;
+                const xyz = await axios.get("http://localhost:8000/user/view/" + this.post.user_id);
+                this.author = xyz.data;
+                const commentData = await axios.get("http://localhost:8000/comment/view/"+this.$route.params.id); 
+                this.comments = commentData.data;               
             } catch (error) {
                 console.log(error);
             }
+    },
+    watch:{
+        async commentwatcher(){
+            const commentData = await axios.get("http://localhost:8000/comment/view/"+this.$route.params.id); 
+            this.comments = commentData.data;      
         }
+    }
 };
 </script>
 

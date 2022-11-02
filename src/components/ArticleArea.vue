@@ -3,7 +3,7 @@
         <div class="img-fluid">
             <img :src="`http://localhost:8000/${thumbnail}`">
         </div>
-       {{content}}
+        <div v-html="content"></div>
 
     </div>
 </template>

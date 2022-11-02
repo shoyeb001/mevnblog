@@ -42,7 +42,7 @@
 
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <router-link class="dropdown-item" to="/view">View</router-link>
+                <router-link class="dropdown-item" to="/profile">View</router-link>
               </li>
               <li>
                 <a class="dropdown-item" @click="logout()">Logout</a>
@@ -58,7 +58,7 @@
           <button class="btn btn-outline-success" type="submit"><img class="icon"
               src="../assets/icons/search.png"></button>
         </form>
-        <a class="btn header-btn btn-primary">Get Started</a>
+        <router-link to="/write" v-if="this.store.state.islogged==true" class="btn header-btn btn-primary">New Post</router-link>
       </div>
     </div>
   </nav>
@@ -72,13 +72,13 @@ export default {
     logout(){
       localStorage.clear();
       this.store.state.islogged = false;
+      this.$router.push("/");
     }
   },
   mounted() {
     if (localStorage.getItem("user")) {
       this.store.state.islogged = true;
     }
-    console.log(this.store.state.islogged);
   }
 }
 </script>

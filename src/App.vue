@@ -19,8 +19,7 @@ export default {
     },
     methods:{
         checkUser(a){
-            this.islogged = a;
-            
+            this.islogged = a;  
         }
     }
 }
