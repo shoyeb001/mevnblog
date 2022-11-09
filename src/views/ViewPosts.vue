@@ -23,8 +23,8 @@
             <div class="col-md-8">
                 <h4>Posts</h4>
                 <div v-for="item in post">
-                    <Posts :date="item.createdAt" :UpdateData="DataUpdate" :heading="item.title"
-                        :description="item.description" :id="item._id" />
+                    <Posts :date="item.createdAt" :heading="item.title" :description="item.description" :id="item._id"
+                        :UpdateThis="UpdateData" />
                 </div>
             </div>
         </div>
@@ -49,18 +49,6 @@ export default {
             updateval: 0,
         }
     },
-    async created() {
-        const user_id = localStorage.getItem("user_id");
-        const user = await axios.get("http://localhost:8000/user/view/" + user_id);
-        this.user = user.data;
-        const token = JSON.parse(localStorage.getItem('user'));
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        };
-        const posts = await axios.get("http://localhost:8000/post/view/user/" + user_id, { headers: headers });
-        this.post = posts.data;
-    },
     methods: {
         logout() {
             localStorage.clear();
@@ -74,10 +62,27 @@ export default {
     watch: {
         async updateval(val) {
             const user_id = localStorage.getItem("user_id");
+            const token = JSON.parse(localStorage.getItem('user'));
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            };
             const posts = await axios.get("http://localhost:8000/post/view/user/" + user_id, { headers: headers });
             this.post = posts.data;
         }
-    }
+    },
+    async created() {
+        const user_id = localStorage.getItem("user_id");
+        const user = await axios.get("http://localhost:8000/user/view/" + user_id);
+        this.user = user.data;
+        const token = JSON.parse(localStorage.getItem('user'));
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        };
+        const posts = await axios.get("http://localhost:8000/post/view/user/" + user_id, { headers: headers });
+        this.post = posts.data;
+    },
 }
 </script>
 

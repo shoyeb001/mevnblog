@@ -8,6 +8,7 @@ import Write from "../views/Write.vue";
 import Profile from "../views/Profile.vue";
 import ViewPosts from "../views/ViewPosts.vue";
 import EditPost from "../views/EditPost.vue";
+import SearchPage from "../views/Search.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +62,11 @@ const router = createRouter({
       path:"/post/edit/:id",
       name:"Edit Post",
       component:EditPost,
+    },
+    {
+      path:"/search",
+      name:"Search Page",
+      component:SearchPage,
     }
   ]
 })

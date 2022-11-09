@@ -53,11 +53,11 @@
             </ul>
           </li>
         </ul>
-        <form class="d-flex form">
-          <input class="form-control me-2 search" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit"><img class="icon"
+        <div class="d-flex form">
+          <input class="form-control me-2 search" v-model="name" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" @click="Search()"><img class="icon"
               src="../assets/icons/search.png"></button>
-        </form>
+          </div>
         <router-link to="/write" v-if="this.store.state.islogged==true" class="btn header-btn btn-primary">New Post</router-link>
       </div>
     </div>
@@ -65,14 +65,23 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Header',
   inject:["store"],
+  data(){
+    return{
+      name:"",
+    }
+  },
   methods:{
     logout(){
       localStorage.clear();
       this.store.state.islogged = false;
       this.$router.push("/");
+    },
+    Search(){
+      this.$router.push({path:"/search",query:{name:this.name}});
     }
   },
   mounted() {

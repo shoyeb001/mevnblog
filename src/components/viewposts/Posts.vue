@@ -19,8 +19,8 @@
                             <router-link class="read-more link" :to="`/article/view/${id}`">Read More</router-link>
                         </div>
                         <div class="sharing">
-                            <router-link class="share" :to="`/post/edit/${id}`"><i class="fa fa-eye"></i>View</router-link>
-                            <div class="comments" @click="Edit()"><i class="fa fa-pencil"></i>Edit</div>
+                            <router-link class="share" :to="`/article/view/${id}`"><i class="fa fa-eye"></i>View</router-link>
+                            <router-link  :to="`/post/edit/${id}`" class="comments" @click="Edit()"><i class="fa fa-pencil"></i>Edit</router-link>
                             <div class="views" @click="DeletePost()"><i class="fa fa-trash"></i>Delete</div>
                         </div>
                     </div>
@@ -41,7 +41,8 @@ export default {
         //   tags:Array,
         id: String,
         date: Date,
-        DataUpdate:Function,
+        UpdateThis: Function,
+
     },
     methods: {
         async DeletePost() {
@@ -60,7 +61,7 @@ export default {
             console.log(`http://localhost:8000/post/delete/${user_id}`);
             const res = await axios.delete(`http://localhost:8000/post/delete/${user_id}`,{data, headers:headers});
             console.log(res);
-            // this.DataUpdate();
+            this.UpdateThis();
         },
         // view(){
         //     this.$router.push('Home') 
@@ -104,6 +105,11 @@ export default {
     font-size: 16px;
     line-height: 20px;
     color: #AFAFAF;
+}
+
+.share, .comments{
+    color: #AFAFAF;
+    text-decoration: none;
 }
 
 h2 {

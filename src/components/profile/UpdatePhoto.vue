@@ -47,7 +47,6 @@ export default {
                 this.image = input.files[0];
                 reader.readAsDataURL(input.files[0]);
                 this.file = this.$refs.file.files[0];
-
             }
         },
         async UpdatePhoto() {
@@ -64,7 +63,6 @@ export default {
             this.src = "http://127.0.0.1:5173/src/assets/img/default.jpg";
             this.file = "";
             this.UpdateThis();
-
         }
     }
 
