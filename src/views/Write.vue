@@ -2,24 +2,27 @@
     <div class="write">
         <div class="container">
             <h2>Write Article</h2>
-            <p>{{this.msg}}</p>
+            <p>{{ this.msg }}</p>
             <div class="mb-3">
-                <input type="text" v-model="title" class="form-control" id="exampleFormControlInput1" placeholder="Title">
+                <input type="text" v-model="title" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Title">
             </div>
             <div class="mb-3">
                 <textarea class="form-control" v-model="description" id="exampleFormControlTextarea1" rows="3"
                     placeholder="Description"></textarea>
             </div>
             <div class="mb-3">
-                <input @change="handlFileUpload()" ref="file" type="file" class="form-control" id="exampleFormControlInput1" placeholder="Thumbnail">
+                <input @change="handlFileUpload()" ref="file" type="file" class="form-control"
+                    id="exampleFormControlInput1" placeholder="Thumbnail">
             </div>
             <div class="mb-3">
-                <input type="text" v-model="tags" name="product_tags" class="form-control" required="">
+                <!-- <input type="text" v-model="tags" name="product_tags" class="form-control" required=""> -->
+                <vue3-tags-input :tags="tags" placeholder="input tags" @on-tags-changed="handleChangeTag" />
             </div>
             <div class="mb-3">
                 <!-- <TextEditor /> -->
                 <div class="editor">
-                    <quill-editor  v-model:content="content" contentType="html" theme="snow" toolbar="full">
+                    <quill-editor v-model:content="content" contentType="html" theme="snow" toolbar="full">
 
                     </quill-editor>
                 </div>
@@ -33,6 +36,7 @@
 import TextEditor from '../components/TextEditor.vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import Vue3TagsInput from 'vue3-tags-input';
 import axios from 'axios';
 
 
@@ -40,40 +44,48 @@ export default {
     name: "Write",
     components: {
         TextEditor,
-        QuillEditor
-
+        QuillEditor,
+        Vue3TagsInput
     },
     data() {
         return {
-            content:"",
-            title:"",
-            description:"",
-            tags:"",
-            thumbnail:'',
-            msg:'',
+            content: "",
+            title: "",
+            description: "",
+            tags: ['html', 'vue', 'js'],
+            thumbnail: '',
+            msg: '',
         }
     },
 
     methods: {
-        handlFileUpload(){
+        handleChangeTag(tags) {
+            this.tags = tags;
+        },
+        handlFileUpload() {
             this.thumbnail = this.$refs.file.files[0];
         },
         async postArticle() {
-          const user_id = localStorage.getItem("user_id");
-          let formdata = new FormData();
-          formdata.append("title",this.title);
-          formdata.append("description",this.description);
-          formdata.append("thumbnail",this.thumbnail);
-          formdata.append("tags",this.tags);
-          formdata.append("content",this.content);
-          const token = JSON.parse(localStorage.getItem('user'));
-          const headers = {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`,
-                    };
-          const res = await axios.post("http://localhost:8000/post/add/"+user_id, formdata, {headers:headers});
-          this.$router.push("/blog");
-          this.msg=res.data.msg;
+            const user_id = localStorage.getItem("user_id");
+            let formdata = new FormData();
+            formdata.append("title", this.title);
+            formdata.append("description", this.description);
+            formdata.append("thumbnail", this.thumbnail);
+            console.log(this.tags);
+            for (let index = 0; index < this.tags.length; index++) {
+                console.log(this.tags[index]);
+                formdata.append("tags["+index+"]",this.tags[index]);
+                
+            }
+            formdata.append("content", this.content);
+            const token = JSON.parse(localStorage.getItem('user'));
+            const headers = {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
+            };
+            const res = await axios.post("http://localhost:8000/post/add/" + user_id, formdata, { headers: headers });
+            this.$router.push("/blog");
+            this.msg = res.data.msg;
         }
     }
 }

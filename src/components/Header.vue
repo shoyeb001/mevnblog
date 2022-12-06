@@ -17,12 +17,12 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/blog">Blog</router-link>
           </li>
-          <li v-if="this.store.state.islogged==false" class="nav-item dropdown">
+          <li v-if="this.store.state.islogged == false" class="nav-item dropdown">
             <!-- <div v-if="islogged==false"> -->
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Signin
-              </a>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Signin
+            </a>
             <!-- </div> -->
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
@@ -34,11 +34,11 @@
             </ul>
           </li>
 
-          <li v-if="this.store.state.islogged==true" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Profile
-              </a>
+          <li v-if="this.store.state.islogged == true" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Profile
+            </a>
 
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
@@ -54,34 +54,60 @@
           </li>
         </ul>
         <div class="d-flex form">
-          <input class="form-control me-2 search" v-model="name" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2 search" @input="SearchThis()" v-model="name" type="search"
+            placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" @click="Search()"><img class="icon"
               src="../assets/icons/search.png"></button>
-          </div>
-        <router-link to="/write" v-if="this.store.state.islogged==true" class="btn header-btn btn-primary">New Post</router-link>
+        </div>
+        <router-link to="/write" v-if="this.store.state.islogged == true" class="btn header-btn btn-primary">New Post
+        </router-link>
       </div>
     </div>
   </nav>
+  <!-- <div class="search-hinds">
+    <ul>
+      <li class="urls" v-for="item in data" @click="seturl(item.title)">{{item.title}}</li>
+    </ul>
+  </div> -->
+  <div id="searchs" class="searchs">
+    <ul class="hints">
+      <li class="urls" v-for="item in data" @click="seturl(item.title)"><img src="../assets/img/sicon.webp" class="search-img">{{item.title}}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
   name: 'Header',
-  inject:["store"],
-  data(){
-    return{
-      name:"",
+  inject: ["store"],
+  data() {
+    return {
+      name: "",
+      data: "",
     }
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       localStorage.clear();
       this.store.state.islogged = false;
       this.$router.push("/");
     },
-    Search(){
-      this.$router.push({path:"/search",query:{name:this.name}});
+    Search() {
+      this.$router.push({ path: "/search", query: { name: this.name } });
+    },
+    async SearchThis() {
+      if (this.name != "") {
+        const hint = await axios.get("http://localhost:8000/post/search/" + this.name);
+        this.data = hint.data;
+        document.getElementById("searchs").style.display="block";
+      }else{
+        this.data="";
+        document.getElementById("searchs").style.display="none";
+      }
+    },
+    seturl(url){
+      this.name=url;
     }
   },
   mounted() {
@@ -137,8 +163,44 @@ export default {
   box-shadow: 0 0px 1rem rgb(0 0 0 / 50%);
 
 }
-a{
+
+a {
   cursor: pointer;
+}
+
+.urls{
+  cursor: pointer;
+}
+
+.searchs{
+  width: 293px;
+  height: auto;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0px 1rem rgb(0 0 0 / 20%);
+  position: fixed;
+  right: 184px;
+  z-index: 2000;
+  top: 56px;
+  display: none;
+}
+
+.searchs ul{
+  list-style: none;
+  margin: none;
+  padding: none;
+}
+
+.searchs ul li{
+  padding: 10px 15px;
+}
+
+.search-img{
+  width: 34px;
+}
+
+.hints{
+  padding-left: 0;
 }
 
 @media(max-width:992px) {

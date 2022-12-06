@@ -6,7 +6,7 @@
             <div class="blogs">
                 <div class="row">
                     <div class="col-md-4" v-for="items in blog">
-                        <BlogArticleContainer :heading="items.title" :description="items.description" :thumbnail="items.thumbnail" :tags="items.tags[0]" :id="items._id" :user_id="items.user_id" :date="items.created_at"/>
+                        <BlogArticleContainer :heading="items.title" :description="items.description" :thumbnail="items.thumbnail" :tags="items.tags" :id="items._id" :user_id="items.user_id" :date="items.created_at"/>
                     </div>
                 </div>
             </div>

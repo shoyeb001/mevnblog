@@ -90,4 +90,12 @@ p{
     font-family: 'Samsung Sharp Sans Regular', sans-serif;
     color: #fff;
 }
+@media(max-width:990px){
+    h2{
+        font-size: 1.2rem !important;
+    }
+    p{
+        font-size: 12px;
+    }
+}
 </style>

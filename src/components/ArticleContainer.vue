@@ -8,7 +8,7 @@
               </div>
               <div class="small-text">
                 <div class="tag">
-                  <span class="text-gray">{{tags}}</span>
+                    <span v-for="i in tags" class="text-gray">{{i}}</span>
                 </div>
                 <div class="date">
                   <span class="text-gray">{{date}}</span>
@@ -42,6 +42,10 @@ export default {
     tags:Array,
     id:String,
     date:Date,
+  },
+  mounted(){
+    console.log(this.tags[0]);
+
   }
 };
 </script>
@@ -78,6 +82,7 @@ export default {
     font-size: 16px;
     line-height: 20px;
     color: #AFAFAF;
+    padding-left: 10px;
   }
   h2{
     font-size: 2rem;

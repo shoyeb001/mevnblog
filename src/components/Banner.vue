@@ -63,9 +63,29 @@ p{
     border-radius: 14px;
     width: 167px;
     font-weight:600;
-
-
+}
+.img-container{
+  width: 100%;
+  overflow: hidden;
 }
 
+.img-container img{
+  width: 100%;
+}
+
+@media(max-width: 990px){
+  h1{
+    font-size: 40px;
+    line-height: 3rem;
+    margin-top: 10px;
+  }
+  p{
+    font-size: 15px;
+  }
+  .btn{
+    width: 40%;
+    font-size: 0.8rem;
+  }
+}
 
 </style>

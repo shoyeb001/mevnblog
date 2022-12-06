@@ -59,4 +59,10 @@ img{
   object-fit: cover;
   overflow: hidden;
 }
+
+@media(max-width:990px){
+  .card-img{
+    height: 100px;
+  }
+}
 </style>

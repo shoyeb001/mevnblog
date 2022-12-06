@@ -4,9 +4,8 @@
        <h2 class="text-center">Blogs</h2>
         <TagsContainer/>
         <div v-for="items in posts">
-            <ArticleContainer :heading="items.title" :description="items.description" :thumbnail="items.thumbnail" :tags="items.tags[0]" :id="items._id" :date="items.created_at"/>
+            <ArticleContainer :heading="items.title" :description="items.description" :thumbnail="items.thumbnail" :tags="items.tags" :id="items._id" :date="items.created_at" :SetTag="GetTag"/>
         </div>
-       
        </div>
     </div>
 </template>
@@ -25,12 +24,19 @@ import axios from "axios";
         data(){
             return{
                 posts : null,
+                tag:"",
+            }
+        },
+        methods:{
+            GetTag(tag){
+                console.log(tag);
             }
         },
         async  mounted(){
             try {
                 const article = await axios.get("http://localhost:8000/post/view/");
                 this.posts = article.data;
+                console.log(this.posts);
             } catch (error) {
                 console.log(error);
             }

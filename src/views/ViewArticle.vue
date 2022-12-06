@@ -13,7 +13,7 @@
                     <div class="tags">
                         <h2>Tags</h2>
                         <hr class="line" />
-                        <span v-for="i in tags">
+                        <span v-for="i in post.tags">
                             <Tags :name="i" />
                         </span>
                     </div>

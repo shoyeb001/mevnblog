@@ -1,7 +1,7 @@
 <template>
     <div class="tags">
         <span v-for="i in tags">
-            <Tags class="tagsitems" :name="i"/>
+            <Tags class="tagsitems" @click="Changetag(i)" :name="i"/>
         </span>
     </div>
 </template>
@@ -10,6 +10,9 @@
    import Tags from "./Tags.vue";
     export default {
         name:"TagsContainer",
+        props:{
+            SetTag: Function,
+        },
         components:{
             Tags,
         },
@@ -19,7 +22,13 @@
                     "C++", "JAVA", "Python", "C Programming", "Web Development", "Web Design", "Machine Learning"
                 ]
             }
-        }
+        },
+        methods:{
+            Changetag(item){
+                console.log(item);
+                this.SetTag(item);
+            }
+        },
 
     }
 </script>
